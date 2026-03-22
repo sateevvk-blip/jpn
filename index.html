@@ -11,6 +11,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: #f0eeea; color: #1a1a2e; }
 
+  /* ── HERO ── */
   .hero {
     position: relative;
     background: linear-gradient(135deg, #1a0a2e 0%, #16213e 45%, #1a3a6e 75%, #c23152 100%);
@@ -35,6 +36,7 @@
   .main { max-width: 1280px; margin: 0 auto; padding: 44px 28px 80px; }
   .section-title { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #999; margin-bottom: 18px; margin-top: 52px; }
 
+  /* ── CITY CARDS ── */
   .cities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
   .city-card {
     border-radius: 22px; overflow: hidden; position: relative;
@@ -60,63 +62,134 @@
     font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 10px; letter-spacing: 0.8px;
   }
 
+  /* ── MAP ── */
   .map-section { border-radius: 24px; overflow: hidden; background: #fff; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
-  .map-header { padding: 20px 24px 12px; display: flex; align-items: center; justify-content: space-between; }
+  .map-header { padding: 20px 24px 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   .map-header h3 { font-size: 15px; font-weight: 700; }
   .map-header span { font-size: 12px; color: #999; }
-  #map { margin: 0 16px 0; border-radius: 16px; height: 420px; z-index: 1; }
+  #map { margin: 0 16px; border-radius: 16px; height: 420px; z-index: 1; }
   .map-legend { display: flex; gap: 18px; padding: 14px 24px; flex-wrap: wrap; }
   .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; }
-  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.7); }
-
-  /* Hide Leaflet attribution completely */
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.7); flex-shrink:0; }
   .leaflet-control-attribution { display: none !important; }
 
-  .timeline-wrap { background: #fff; border-radius: 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); padding: 16px; }
-  .day-row { display: grid; grid-template-columns: 96px 130px 1fr 190px; gap: 12px; align-items: center; padding: 13px 16px; border-radius: 12px; transition: background 0.15s; }
-  .day-row:hover { background: #f8f7f5; }
-  .day-row.section-start { margin-top: 6px; border-left: 3px solid; padding-left: 14px; }
-  .tr-tokyo { border-color: #3b82f6; } .tr-fukuoka { border-color: #a855f7; }
-  .tr-beppu  { border-color: #10b981; } .tr-itsuku  { border-color: #ef4444; }
-  .day-date { font-size: 13px; font-weight: 700; }
+  /* ── TIMELINE ── */
+  .timeline-wrap { background: #fff; border-radius: 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); overflow: hidden; }
+
+  .day-row {
+    display: grid;
+    grid-template-columns: 90px 120px 1fr auto;
+    gap: 10px 14px;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: filter 0.15s;
+  }
+  .day-row:last-child { border-bottom: none; }
+  .day-row:hover { filter: brightness(0.97); }
+
+  /* City colour fills */
+  .day-row.tr-tokyo    { background: #eff6ff; border-left: 4px solid #3b82f6; }
+  .day-row.tr-fukuoka  { background: #faf5ff; border-left: 4px solid #a855f7; }
+  .day-row.tr-beppu    { background: #f0fdf4; border-left: 4px solid #10b981; }
+  .day-row.tr-itsuku   { background: #fff1f2; border-left: 4px solid #ef4444; }
+  .day-row.tr-depart   { background: #fff7ed; border-left: 4px solid #f97316; }
+
+  .day-date    { font-size: 13px; font-weight: 700; color: #111; white-space: nowrap; }
   .day-weekday { font-size: 11px; color: #aaa; margin-top: 2px; }
-  .day-city-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+
+  .day-city-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 11px; border-radius: 20px; font-size: 11px; font-weight: 600;
+    white-space: nowrap;
+  }
   .badge-tokyo   { background: #dbeafe; color: #1d4ed8; }
   .badge-fukuoka { background: #f3e8ff; color: #7c3aed; }
   .badge-beppu   { background: #d1fae5; color: #059669; }
   .badge-itsuku  { background: #fee2e2; color: #dc2626; }
+  .badge-depart  { background: #ffedd5; color: #c2410c; }
+
   .day-plan { font-size: 13px; color: #374151; line-height: 1.5; }
-  .day-transport { font-size: 11px; color: #bbb; text-align: right; line-height: 1.5; }
+
+  .day-transport {
+    font-size: 11px; color: #bbb; text-align: right; white-space: nowrap; line-height: 1.5;
+  }
   .day-transport.active { color: #f59e0b; font-weight: 600; }
 
+  /* ── CHECKLIST ── */
   .checklist-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 12px; }
-  .check-item { display: flex; align-items: flex-start; gap: 14px; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 16px; transition: box-shadow 0.15s; }
+
+  .check-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px;
+    padding: 16px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.2s, background 0.2s;
+    user-select: none;
+  }
   .check-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
   .check-item.done   { background: #f0fdf4; border-color: #bbf7d0; }
   .check-item.urgent { border-color: #fecaca; }
   .check-item.medium { border-color: #fde68a; }
-  .check-box { width: 22px; height: 22px; border-radius: 6px; border: 2px solid #d1d5db; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+
+  .check-box {
+    width: 22px; height: 22px; border-radius: 6px; border: 2px solid #d1d5db;
+    flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; transition: all 0.18s;
+  }
   .check-item.done   .check-box { background: #22c55e; border-color: #22c55e; color: #fff; }
   .check-item.urgent .check-box { border-color: #ef4444; }
   .check-item.medium .check-box { border-color: #f59e0b; }
+  .check-item.done.urgent .check-box,
+  .check-item.done.medium .check-box { background: #22c55e; border-color: #22c55e; color: #fff; }
+
   .check-text strong { font-size: 13px; font-weight: 700; color: #111827; display: block; margin-bottom: 3px; }
   .check-text span   { font-size: 11px; color: #9ca3af; }
-  .priority-dot { font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 7px; }
+  .priority-dot {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 7px;
+  }
   .dot-done   { background: #dcfce7; color: #16a34a; }
   .dot-urgent { background: #fee2e2; color: #dc2626; }
   .dot-medium { background: #fef3c7; color: #d97706; }
   .dot-low    { background: #eff6ff; color: #2563eb; }
 
-  @media (max-width: 768px) {
-    .day-row { grid-template-columns: 75px 1fr; }
-    .day-transport, .day-city-badge { display: none; }
+  /* ── MOBILE ── */
+  @media (max-width: 640px) {
     .hero { padding: 36px 20px 52px; }
-    .cities-grid { grid-template-columns: 1fr 1fr; }
+    .hero::after { font-size: 90px; opacity: 0.04; }
+    .main { padding: 28px 16px 60px; }
+    .cities-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .city-card { height: 170px; border-radius: 16px; }
+    .city-card-body h3 { font-size: 16px; }
+
+    #map { height: 280px; margin: 0 10px; }
+
+    /* Mobile timeline: stack into 2-col card layout */
+    .day-row {
+      grid-template-columns: 80px 1fr;
+      grid-template-rows: auto auto;
+      gap: 4px 10px;
+      padding: 12px 14px 12px 12px;
+      border-radius: 0;
+    }
+    .day-city-badge { font-size: 10px; padding: 3px 9px; }
+    .day-transport { display: none; }
+    .day-plan {
+      grid-column: 1 / -1;
+      font-size: 12px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+      margin-top: 2px;
+    }
+
+    .checklist-grid { grid-template-columns: 1fr; }
+    .map-header { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-badge">🌸 Сакура · Апрель 2026</div>
   <h1>Япония<br>от Токио до Кюсю</h1>
@@ -131,6 +204,7 @@
 
 <div class="main">
 
+  <!-- CITY CARDS -->
   <div class="section-title">📍 Базы маршрута</div>
   <div class="cities-grid">
     <div class="city-card">
@@ -159,6 +233,7 @@
     </div>
   </div>
 
+  <!-- MAP -->
   <div class="section-title">🗺 Карта маршрута</div>
   <div class="map-section">
     <div class="map-header">
@@ -174,110 +249,154 @@
     </div>
   </div>
 
+  <!-- TIMELINE -->
   <div class="section-title">📅 День за днём</div>
   <div class="timeline-wrap">
-    <div style="display:flex;flex-direction:column;gap:2px;">
-      <div class="day-row section-start tr-tokyo">
-        <div><div class="day-date">20 апр</div><div class="day-weekday">Понедельник</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">✈️ Прилёт в HND, заселение, отдых после перелёта</div>
-        <div class="day-transport active">Межд. рейс → HND ✓</div>
-      </div>
-      <div class="day-row tr-tokyo">
-        <div><div class="day-date">21 апр</div><div class="day-weekday">Вторник</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">🌸 Спокойный день в городе, без плотной программы</div>
-        <div class="day-transport">—</div>
-      </div>
-      <div class="day-row tr-tokyo">
-        <div><div class="day-date">22 апр</div><div class="day-weekday">Среда</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">🏙 Ещё один лёгкий день в Токио</div>
-        <div class="day-transport">—</div>
-      </div>
-      <div class="day-row section-start tr-fukuoka">
-        <div><div class="day-date">23 апр</div><div class="day-weekday">Четверг</div></div>
-        <div><span class="day-city-badge badge-fukuoka">🍜 Фукуока</span></div>
-        <div class="day-plan">✈️ Перелёт в Фукуоку, вечерняя прогулка по Tenjin</div>
-        <div class="day-transport active">HND → FUK · ~2 ч</div>
-      </div>
-      <div class="day-row tr-fukuoka">
-        <div><div class="day-date">24 апр</div><div class="day-weekday">Пятница</div></div>
-        <div><span class="day-city-badge badge-fukuoka">🍜 Фукуока</span></div>
-        <div class="day-plan">🌊 Итосима: белые тории Sakurai Futamigaura + Keya Beach</div>
-        <div class="day-transport active">Поезд / автобус</div>
-      </div>
-      <div class="day-row section-start tr-beppu">
-        <div><div class="day-date">25 апр</div><div class="day-weekday">Суббота</div></div>
-        <div><span class="day-city-badge badge-beppu">♨️ Бэппу</span></div>
-        <div class="day-plan">🚆 Переезд в Бэппу, онсэн и отдых</div>
-        <div class="day-transport active">JR Sonic · ~2 ч</div>
-      </div>
-      <div class="day-row tr-beppu">
-        <div><div class="day-date">26 апр</div><div class="day-weekday">Воскресенье</div></div>
-        <div><span class="day-city-badge badge-beppu">♨️ Бэппу</span></div>
-        <div class="day-plan">♨️ Jigoku Meguri и онсэн-день</div>
-        <div class="day-transport">—</div>
-      </div>
-      <div class="day-row section-start tr-itsuku">
-        <div><div class="day-date">27 апр</div><div class="day-weekday">Понедельник</div></div>
-        <div><span class="day-city-badge badge-itsuku">⛩️ Ицукусима</span></div>
-        <div class="day-plan">⛩️ Плавающие тории, прогулки по острову и море</div>
-        <div class="day-transport active">Синкансэн · ~4 ч</div>
-      </div>
-      <div class="day-row section-start tr-tokyo">
-        <div><div class="day-date">28 апр</div><div class="day-weekday">Вторник</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">✈️ Возвращение в Токио, вечерний променад</div>
-        <div class="day-transport active">HIJ → HND · ~1,5 ч</div>
-      </div>
-      <div class="day-row tr-tokyo">
-        <div><div class="day-date">29 апр</div><div class="day-weekday">Среда</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">🏯 Новые районы Токио</div>
-        <div class="day-transport">—</div>
-      </div>
-      <div class="day-row tr-tokyo">
-        <div><div class="day-date">30 апр</div><div class="day-weekday">Четверг</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">🏔 Однодневная поездка в Камакуру</div>
-        <div class="day-transport active">Экспресс · ~1 ч</div>
-      </div>
-      <div class="day-row tr-tokyo">
-        <div><div class="day-date">1 мая</div><div class="day-weekday">Пятница</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">🛍 Свободный день: шопинг, кафе, прогулки</div>
-        <div class="day-transport">—</div>
-      </div>
-      <div class="day-row tr-tokyo">
-        <div><div class="day-date">2 мая</div><div class="day-weekday">Суббота</div></div>
-        <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
-        <div class="day-plan">🌸 Финальный день: запас по погоде и покупкам</div>
-        <div class="day-transport">—</div>
-      </div>
-      <div class="day-row" style="background:#fff7ed; border-radius:12px; margin-top:6px; border-left:3px solid #f97316; padding-left:14px;">
-        <div><div class="day-date">3 мая</div><div class="day-weekday">Воскресенье</div></div>
-        <div><span class="day-city-badge" style="background:#ffedd5;color:#c2410c;">✈️ Вылет</span></div>
-        <div class="day-plan">🏠 Вылет домой из HND</div>
-        <div class="day-transport active">Межд. рейс HND ✓</div>
-      </div>
+
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">20 апр</div><div class="day-weekday">Понедельник</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">✈️ Прилёт в HND, заселение, отдых после перелёта</div>
+      <div class="day-transport active">Межд. рейс → HND ✓</div>
     </div>
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">21 апр</div><div class="day-weekday">Вторник</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">🌸 Спокойный день в городе, без плотной программы</div>
+      <div class="day-transport">—</div>
+    </div>
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">22 апр</div><div class="day-weekday">Среда</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">🏙 Ещё один лёгкий день в Токио</div>
+      <div class="day-transport">—</div>
+    </div>
+
+    <div class="day-row tr-fukuoka">
+      <div><div class="day-date">23 апр</div><div class="day-weekday">Четверг</div></div>
+      <div><span class="day-city-badge badge-fukuoka">🍜 Фукуока</span></div>
+      <div class="day-plan">✈️ Перелёт в Фукуоку, вечерняя прогулка по Tenjin</div>
+      <div class="day-transport active">HND → FUK · ~2 ч</div>
+    </div>
+    <div class="day-row tr-fukuoka">
+      <div><div class="day-date">24 апр</div><div class="day-weekday">Пятница</div></div>
+      <div><span class="day-city-badge badge-fukuoka">🍜 Фукуока</span></div>
+      <div class="day-plan">🌊 Итосима: белые тории Sakurai Futamigaura + Keya Beach</div>
+      <div class="day-transport active">Поезд / автобус</div>
+    </div>
+
+    <div class="day-row tr-beppu">
+      <div><div class="day-date">25 апр</div><div class="day-weekday">Суббота</div></div>
+      <div><span class="day-city-badge badge-beppu">♨️ Бэппу</span></div>
+      <div class="day-plan">🚆 Переезд в Бэппу, онсэн и отдых</div>
+      <div class="day-transport active">JR Sonic · ~2 ч</div>
+    </div>
+    <div class="day-row tr-beppu">
+      <div><div class="day-date">26 апр</div><div class="day-weekday">Воскресенье</div></div>
+      <div><span class="day-city-badge badge-beppu">♨️ Бэппу</span></div>
+      <div class="day-plan">♨️ Jigoku Meguri и онсэн-день</div>
+      <div class="day-transport">—</div>
+    </div>
+
+    <div class="day-row tr-itsuku">
+      <div><div class="day-date">27 апр</div><div class="day-weekday">Понедельник</div></div>
+      <div><span class="day-city-badge badge-itsuku">⛩️ Ицукусима</span></div>
+      <div class="day-plan">⛩️ Плавающие тории, прогулки по острову и море</div>
+      <div class="day-transport active">Синкансэн · ~4 ч</div>
+    </div>
+
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">28 апр</div><div class="day-weekday">Вторник</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">✈️ Возвращение в Токио, вечерний променад</div>
+      <div class="day-transport active">HIJ → HND · ~1,5 ч</div>
+    </div>
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">29 апр</div><div class="day-weekday">Среда</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">🏯 Новые районы Токио</div>
+      <div class="day-transport">—</div>
+    </div>
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">30 апр</div><div class="day-weekday">Четверг</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">🏔 Однодневная поездка в Камакуру</div>
+      <div class="day-transport active">Экспресс · ~1 ч</div>
+    </div>
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">1 мая</div><div class="day-weekday">Пятница</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">🛍 Свободный день: шопинг, кафе, прогулки</div>
+      <div class="day-transport">—</div>
+    </div>
+    <div class="day-row tr-tokyo">
+      <div><div class="day-date">2 мая</div><div class="day-weekday">Суббота</div></div>
+      <div><span class="day-city-badge badge-tokyo">🗼 Токио</span></div>
+      <div class="day-plan">🌸 Финальный день: запас по погоде и покупкам</div>
+      <div class="day-transport">—</div>
+    </div>
+    <div class="day-row tr-depart">
+      <div><div class="day-date">3 мая</div><div class="day-weekday">Воскресенье</div></div>
+      <div><span class="day-city-badge badge-depart">✈️ Вылет</span></div>
+      <div class="day-plan">🏠 Вылет домой из HND</div>
+      <div class="day-transport active">Межд. рейс HND ✓</div>
+    </div>
+
   </div>
 
+  <!-- CHECKLIST -->
   <div class="section-title">✅ Чек-лист броней</div>
-  <div class="checklist-grid">
-    <div class="check-item done"><div class="check-box">✓</div><div class="check-text"><strong>Международный перелёт туда</strong><span>Прилёт в HND · 20 апреля</span><div><span class="priority-dot dot-done">Куплено</span></div></div></div>
-    <div class="check-item done"><div class="check-box">✓</div><div class="check-text"><strong>Международный перелёт обратно</strong><span>Вылет из HND · 3 мая</span><div><span class="priority-dot dot-done">Куплено</span></div></div></div>
-    <div class="check-item urgent"><div class="check-box"></div><div class="check-text"><strong>Отель Токио I</strong><span>3 ночи · 20–23 апреля</span><div><span class="priority-dot dot-urgent">Критично</span></div></div></div>
-    <div class="check-item urgent"><div class="check-box"></div><div class="check-text"><strong>Отель Токио II</strong><span>5 ночей · 28 апр – 3 мая</span><div><span class="priority-dot dot-urgent">Критично</span></div></div></div>
-    <div class="check-item medium"><div class="check-box"></div><div class="check-text"><strong>Перелёт HND → FUK</strong><span>ANA / JAL / Skymark · 23 апреля</span><div><span class="priority-dot dot-medium">Срочно</span></div></div></div>
-    <div class="check-item medium"><div class="check-box"></div><div class="check-text"><strong>Перелёт HIJ → HND</strong><span>~1,5 часа · 28 апреля</span><div><span class="priority-dot dot-medium">Срочно</span></div></div></div>
-    <div class="check-item medium"><div class="check-box"></div><div class="check-text"><strong>Отель Фукуока</strong><span>2 ночи · 23–25 апр · Tenjin или Momochi</span><div><span class="priority-dot dot-medium">Срочно</span></div></div></div>
-    <div class="check-item medium"><div class="check-box"></div><div class="check-text"><strong>Отель Бэппу</strong><span>2 ночи · 25–27 апреля</span><div><span class="priority-dot dot-medium">Срочно</span></div></div></div>
-    <div class="check-item medium"><div class="check-box"></div><div class="check-text"><strong>Отель Ицукусима</strong><span>1 ночь · 27–28 апр · рёкан</span><div><span class="priority-dot dot-medium">Срочно</span></div></div></div>
-    <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>JR Hakata → Beppu</strong><span>Limited Express Sonic · 25 апреля</span><div><span class="priority-dot dot-low">Можно позже</span></div></div></div>
-    <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Маршрут до Ицукусимы</strong><span>Синкансэн + паром · 27 апреля</span><div><span class="priority-dot dot-low">Можно позже</span></div></div></div>
-    <div class="check-item"><div class="check-box"></div><div class="check-text"><strong>Поездка в Камакуру</strong><span>Однодневный выезд · 30 апреля</span><div><span class="priority-dot dot-low">Гибко</span></div></div></div>
+  <div class="checklist-grid" id="checklist">
+
+    <div class="check-item done" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>Международный перелёт туда</strong><span>Прилёт в HND · 20 апреля</span><div><span class="priority-dot dot-done">Куплено</span></div></div>
+    </div>
+    <div class="check-item done" onclick="toggleCheck(this)">
+      <div class="check-box">✓</div>
+      <div class="check-text"><strong>Международный перелёт обратно</strong><span>Вылет из HND · 3 мая</span><div><span class="priority-dot dot-done">Куплено</span></div></div>
+    </div>
+    <div class="check-item urgent" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Отель Токио I</strong><span>3 ночи · 20–23 апреля</span><div><span class="priority-dot dot-urgent">Критично</span></div></div>
+    </div>
+    <div class="check-item urgent" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Отель Токио II</strong><span>5 ночей · 28 апр – 3 мая</span><div><span class="priority-dot dot-urgent">Критично</span></div></div>
+    </div>
+    <div class="check-item medium" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Перелёт HND → FUK</strong><span>ANA / JAL / Skymark · 23 апреля</span><div><span class="priority-dot dot-medium">Срочно</span></div></div>
+    </div>
+    <div class="check-item medium" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Перелёт HIJ → HND</strong><span>~1,5 часа · 28 апреля</span><div><span class="priority-dot dot-medium">Срочно</span></div></div>
+    </div>
+    <div class="check-item medium" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Отель Фукуока</strong><span>2 ночи · 23–25 апр · Tenjin или Momochi</span><div><span class="priority-dot dot-medium">Срочно</span></div></div>
+    </div>
+    <div class="check-item medium" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Отель Бэппу</strong><span>2 ночи · 25–27 апреля</span><div><span class="priority-dot dot-medium">Срочно</span></div></div>
+    </div>
+    <div class="check-item medium" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Отель Ицукусима</strong><span>1 ночь · 27–28 апр · рёкан</span><div><span class="priority-dot dot-medium">Срочно</span></div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>JR Hakata → Beppu</strong><span>Limited Express Sonic · 25 апреля</span><div><span class="priority-dot dot-low">Можно позже</span></div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Маршрут до Ицукусимы</strong><span>Синкансэн + паром · 27 апреля</span><div><span class="priority-dot dot-low">Можно позже</span></div></div>
+    </div>
+    <div class="check-item" onclick="toggleCheck(this)">
+      <div class="check-box"></div>
+      <div class="check-text"><strong>Поездка в Камакуру</strong><span>Однодневный выезд · 30 апреля</span><div><span class="priority-dot dot-low">Гибко</span></div></div>
+    </div>
+
   </div>
 
   <div style="text-align:center; margin-top:60px; padding-top:28px; border-top:1px solid #e5e7eb; color:#bbb; font-size:11px; letter-spacing:0.5px;">
@@ -286,25 +405,22 @@
 </div>
 
 <script>
-  // attributionControl: false removes the attribution block (and the flag) entirely
+  /* ── MAP ── */
   var map = L.map("map", { zoomControl: true, scrollWheelZoom: false, attributionControl: false })
               .setView([34.5, 133.8], 6);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18
-  }).addTo(map);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18 }).addTo(map);
 
   function dot(color) {
     return L.divIcon({
       className: "",
-      html: `<div style="width:16px;height:16px;border-radius:50%;background:${color};border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>`,
+      html: '<div style="width:16px;height:16px;border-radius:50%;background:' + color + ';border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.35);"></div>',
       iconSize: [16,16], iconAnchor: [8,8]
     });
   }
   function lbl(text, color) {
     return L.divIcon({
       className: "",
-      html: `<div style="background:#fff;border:1.5px solid ${color};color:#111;border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.12);margin-left:13px;margin-top:-9px;font-family:Inter,sans-serif;">${text}</div>`,
+      html: '<div style="background:#fff;border:1.5px solid ' + color + ';color:#111;border-radius:8px;padding:3px 9px;font-size:11px;font-weight:700;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.12);margin-left:13px;margin-top:-9px;font-family:Inter,sans-serif;">' + text + '</div>',
       iconSize: [130,24], iconAnchor: [0,12]
     });
   }
@@ -316,14 +432,40 @@
     { ll:[34.2963,132.3195], c:"#ef4444", name:"⛩️ Ицукусима", sub:"27–28 апреля" }
   ];
 
-  L.polyline(pts.map(p=>p.ll).concat([pts[0].ll]), {
+  L.polyline(pts.map(function(p){ return p.ll; }).concat([pts[0].ll]), {
     color:"#818cf8", weight:2.5, opacity:0.6, dashArray:"8 6"
   }).addTo(map);
 
   pts.forEach(function(p) {
     L.marker(p.ll, {icon: dot(p.c)}).addTo(map)
-      .bindPopup(`<b style="font-size:13px">${p.name}</b><br><span style="color:#888;font-size:11px">${p.sub}</span>`);
+      .bindPopup('<b style="font-size:13px">' + p.name + '</b><br><span style="color:#888;font-size:11px">' + p.sub + '</span>');
     L.marker(p.ll, {icon: lbl(p.name, p.c)}).addTo(map);
+  });
+
+  /* ── CHECKBOX TOGGLE ── */
+  function toggleCheck(el) {
+    var isDone = el.classList.toggle('done');
+    var box = el.querySelector('.check-box');
+    box.textContent = isDone ? '✓' : '';
+  }
+
+  /* Restore state from localStorage */
+  (function() {
+    var items = document.querySelectorAll('#checklist .check-item');
+    items.forEach(function(item, i) {
+      var key = 'check_' + i;
+      if (localStorage.getItem(key) === '1') {
+        item.classList.add('done');
+        item.querySelector('.check-box').textContent = '✓';
+      }
+    });
+  })();
+
+  /* Save state to localStorage on toggle */
+  document.querySelectorAll('#checklist .check-item').forEach(function(item, i) {
+    item.addEventListener('click', function() {
+      localStorage.setItem('check_' + i, item.classList.contains('done') ? '1' : '0');
+    });
   });
 </script>
 </body>
